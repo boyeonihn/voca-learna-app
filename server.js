@@ -12,7 +12,7 @@ const logger = require('morgan');
 //*import functions/routes
 require('./config/passport')(passport);
 const connectDB = require('./config/database');
-require('dotenv').config({path: './config/.env'});
+require('dotenv').config({ path: './config/.env' });
 
 //todo - connect to database
 connectDB();
@@ -28,6 +28,8 @@ app.use(passport.initialize());
 app.use(flash());
 
 //todo - set routes
+const homeRoutes = require('./routes/home');
+
 
 //todo - start server
 app.listen(PORT, () => {
