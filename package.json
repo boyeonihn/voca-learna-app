@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "tailwindcss": "postcss ./src/tailwind.css -o ./public/css/style.css --watch --verbose",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",

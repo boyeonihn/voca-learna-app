@@ -5,13 +5,17 @@ const PORT = process.env.PORT || 8000;
 const mongoose = require('mongoose');
 const passport = require('passport');
 // const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+// const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
 const logger = require('morgan');
 
 //*import functions/routes
 require('./config/passport')(passport);
+const connectDB = require('./config/database');
+require('dotenv').config({path: './config/.env'});
+
 //todo - connect to database
+connectDB();
 
 //todo - set middleware
 app.set('view engine', 'ejs');
