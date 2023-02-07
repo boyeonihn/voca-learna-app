@@ -19,7 +19,7 @@ connectDB();
 
 //todo - set middleware
 app.set('view engine', 'ejs');
-app.set(express.static('public'));
+app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); // url parser - help validate the information that we are passing back and forth
 // extended true allows us to pass arrays
 
