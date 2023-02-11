@@ -4,13 +4,13 @@
 
 const LocalStrategy = require('passport-local');
 const mongoose = require('mongoose');
+const crypto = require('crypto');
 const User = require('../models/User');
 
-passport.use(
-  new LocalStrategy(function verify(username, password, cb) {
-    User.findOne(
-      { username: username.toLowerCase()},
-      function (err, user) {
+module.exports = function (passport) {
+  passport.use(
+    new LocalStrategy(function verify(username, password, cb) {
+      User.findOne({ username: username.toLowerCase() }, function (err, user) {
         if (err) {
           return cb(err);
         }
@@ -22,7 +22,7 @@ passport.use(
 
         crypto.pbkdf2(
           password,
-          user.salt,
+          process.env.CRYPTO_SALT,
           310000,
           32,
           'sha256',
@@ -30,7 +30,8 @@ passport.use(
             if (err) {
               return cb(err);
             }
-            if (!crypto.timingSafeEqual(user.hashed_password, hashedPassword)) {
+
+            if (user.hashedPassword !== hashedPassword.toString('hex')) {
               return cb(null, false, {
                 message: 'Incorrect username or password.',
               });
@@ -38,10 +39,11 @@ passport.use(
             return cb(null, user);
           }
         );
-      }
-    );
-  })
-);
+      });
+    })
+  );
+};
+
 // module.exports = function (passport) {
 //   passport.use(
 //     new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
