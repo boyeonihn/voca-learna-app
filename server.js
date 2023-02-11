@@ -10,7 +10,7 @@ const flash = require('express-flash');
 const logger = require('morgan');
 
 //*import functions/routes
-const homeRoutes = require('./routes/home');
+const authRoutes = require('./routes/auth');
 require('./config/passport')(passport);
 const connectDB = require('./config/database');
 require('dotenv').config({ path: './config/.env' });
@@ -41,7 +41,7 @@ app.use(flash());
 
 
 //todo - set routes
-app.use('/', homeRoutes); 
+app.use('/', authRoutes); 
 
 
 //todo - start server
