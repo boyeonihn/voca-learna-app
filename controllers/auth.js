@@ -2,32 +2,20 @@ const passport = require('passport');
 const validator = require('validator');
 const User = require('../models/User');
 
-// exports.getLogin = (req, res) => {
-//   if (req.user) {
-//     return res.redirect('/vocablists');
-//   }
-//   res.render('login', {
-//     title: 'Login',
-//   });
-// };
-
 exports.getLogin = (req, res) => {
+  if (req.user) {
+    return res.redirect('/dashboard');
+  }
   res.render('login', {
     title: 'Login',
   });
 };
 
 exports.postLogin = passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/dashboard',
   failureRedirect: '/login',
-})
+});
 
-// exports.postLogin = (req, res, next) => {
-//   passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/login',
-//   });
-// };
 // exports.postLogin = (req, res, next) => {
 //   const validationErrors = [];
 //   if (!validator.isEmail(req.body.email))
