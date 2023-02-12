@@ -1,6 +1,8 @@
 const passport = require('passport');
+const mongoose = require('mongoose');
 const validator = require('validator');
 const User = require('../models/User');
+const crypto = require('crypto');
 
 exports.getLogin = (req, res) => {
   if (req.user) {
@@ -65,15 +67,60 @@ exports.logout = (req, res, next) => {
   });
 };
 
-// exports.getSignup = (req, res) => {
-//   if (req.user) {
-//     return res.redirect('/vocablists');
-//   }
-//   res.render('signup', {
-//     title: 'Create Account',
-//   });
-// };
+exports.getSignup = (req, res) => {
+  // if (req.user) {
+  //   return res.redirect('/dashboard');
+  // }
+  res.render('signup', {
+    title: 'Create Account',
+  });
+};
 
+exports.postSignup = (req, res, next) => {
+  crypto.pbkdf2(
+    req.body.password,
+    process.env.CRYPTO_SALT,
+    310000,
+    32,
+    'sha256',
+    function (err, hashedPassword) {
+      if (err) {
+        return next(err);
+      }
+      const user = new User({
+        username: req.body.username,
+        email: req.body.email,
+        hashedPassword: hashedPassword.toString('hex'),
+      });
+
+      User.findOne(
+        { $or: [{ email: req.body.email }, { username: req.body.username }] },
+        (err, existingUser) => {
+          if (err) {
+            return next(err);
+          }
+          if (existingUser) {
+            req.flash('errors', {
+              msg: 'Account with that email address or username already exists.',
+            });
+            return res.redirect('../signup');
+          }
+          user.save((err) => {
+            if (err) {
+              return next(err);
+            }
+            req.logIn(user, (err) => {
+              if (err) {
+                return next(err);
+              }
+              res.redirect('/dashboard');
+            });
+          });
+        }
+      );
+    }
+  );
+};
 // exports.postSignup = (req, res, next) => {
 //   const validationErrors = [];
 //   if (!validator.isEmail(req.body.email))
