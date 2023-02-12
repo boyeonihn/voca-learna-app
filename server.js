@@ -8,32 +8,31 @@ const logger = require('morgan');
 
 //*import functions/routes
 const authRouter = require('./routes/auth');
+const indexRouter = require('./routes/index');
+
+//connect to database
 const connectDB = require('./config/database');
 require('dotenv').config({ path: './config/.env' });
 connectDB();
+
+// configure passport
 const configurePassport = require('./config/passport');
 configurePassport(passport);
 const configureSession = require('./config/session');
-configureSession(passport, app); 
-
-//todo - connect to database
-
+configureSession(passport, app);
 
 //todo - set middleware
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true })); // url parser - help validate the information that we are passing back and forth
 // extended true allows us to pass arrays
-app.use(express.json()); 
+app.use(express.json());
 
-
-// 
-// app.use(passport.initialize());
-// app.use(passport.session());
 // app.use(flash());
 
 //todo - set routes
 app.use('/', authRouter);
+app.use('/', indexRouter);
 
 //todo - start server
 app.listen(PORT, () => {
