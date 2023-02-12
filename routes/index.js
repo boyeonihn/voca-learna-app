@@ -3,6 +3,5 @@ const router = express.Router();
 const indexController = require('../controllers/index');
 
 router.get('/', indexController.getIndex);
-router.get('/dashboard', indexController.getDashboard);
 
 module.exports = router;
