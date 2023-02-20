@@ -1,6 +1,6 @@
 const session = require('express-session');
 const mongoose = require('mongoose');
-const MongoStore = require('connect-mongo'); 
+const MongoStore = require('connect-mongo');
 
 module.exports = function (passport, app) {
   //todo - set session
