@@ -11,6 +11,7 @@ const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const dashboardRouter = require('./routes/dashboard');
 const ensureLoggedIn = require('./middleware/auth');
+const vocabularyListRouter = require('./routes/vocabularyList');
 
 //connect to database
 const connectDB = require('./config/database');
@@ -32,19 +33,11 @@ app.use(express.json());
 
 // app.use(flash());
 
-// ensureAuth
-// const ensureLoggedIn = (req, res, next) => {
-//   if (!req.user) {
-//     res.redirect('/login');
-//     return;
-//   }
-//   next();
-// };
-
 //todo - set routes
 app.use('/', authRouter);
 app.use('/', indexRouter);
 app.use('/dashboard', ensureLoggedIn, dashboardRouter);
+app.use('/vocabList', ensureLoggedIn, vocabularyListRouter);
 
 //todo - start server
 app.listen(PORT, () => {
