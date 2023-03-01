@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | Voca-Learna</title>
+    <!--ICONS-->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+    <!--STYLESHEET-->
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+  <body class="prose bg-gradient-to-r from-yellow-200 to-cyan-700 p-8">
+    <header class="flex items-center justify-between">
+      <nav class="flex">
+        <a href="/"
+          ><h1 class="font-bold prose prose-2xl text-emerald-600 inline-block">
+            Voca-Learna
+          </h1>
+        </a>
+        <button class="btn inline-block">
+          <a href="/vocabList/createList">+ New List</a>
+        </button>
+        <button class="btn"><a href="/dashboard"><%= username %></a></button>
+        <button class="btn inline-block"><a href="/logout"> LOG OUT</a></button>
+      </nav>
+    </header>
+    <h1 class="text-emerald-600">Create a Vocabulary List</h1>
+    <main>
+      <section class="list-creator">
+        <section class="vocab">
+          <form
+            action="/vocablists/createVocabList"
+            method="POST"
+            class="vocab-header flex-col"
+          >
+            <div>
+              <label class="block" for="unit">Enter "Unit" Name:</label>
+              <input class="block" type="text" name="unit" placeholder="Unit" />
+            </div>
+            <div>
+              <label for="wordList"
+                >Enter Vocabulary Words: (Please enter one word per line)</label
+              >
+              <textarea
+                rows="6"
+                cols="45"
+                name="wordList"
+                placeholder="Vocabulary List"
+              ></textarea>
+            </div>
+
+            <button type="submit">
+              <span class="fas fa-plus"></span>Add Words to List
+            </button>
+            <!-- submit has a default button-->
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content">
+      <div>
+        <p>Copyright © 2023 - All right reserved by Boyeon Ihn</p>
+      </div>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>
