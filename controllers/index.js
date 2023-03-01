@@ -1,3 +1,5 @@
 exports.getIndex = (req, res) => {
-  res.render('index.ejs');
+  res.render('index.ejs', {
+    title: 'Welcome',
+  });
 };
